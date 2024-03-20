@@ -13,26 +13,23 @@ import { motion, AnimatePresence } from "framer-motion";
 const Navbar = () => {
   const [show, setShow] = useState(false);
   const menuVars = {
-    initial: {
-      opacity: 0,
-      y: -10,
+    initial: {   
+      y: -10,  
     },
-    animate: {
-      opacity: 1,
+    animate: {    
       y: 0,
       transition: {
         duration: 0.5,
         ease: [0.12, 0, 0.39, 0],
-        delayChildren: 0.3,
-        staggerChildren: 0.1,
+        
       },
     },
     exit: {
-      opacity: 0,
       y: -10,
       transition: {
-        duration: 0.5,
+        duration: 1,
         ease: [0.22, 1, 0.36, 1],
+        
       },
     },
   };
@@ -103,51 +100,52 @@ const Navbar = () => {
           </div>
         </div>
       </section>
-      
+
       <AnimatePresence>
-      {show && (
-        <motion.div
-          variants={menuVars}
-          initial="initial"
-          animate="animate"
-          exit="exit"
-          className="lg:hidden w-full p-2 h-[180px] bg-black rounded-sm origin-top"
-        >
-          <motion.div className="flex justify-center items-center bg-black mt-5">
-            <motion.button
-              className="px-4 py-1 gap-1 font-bold text-white border border-white-500 rounded-lg flex justify-center items-center"
-              whileHover={{ scale: 1.05 }}
-            >
-              <BsTable className="mr-1" />
-              <p>Course Menu</p>
-            </motion.button>
+        {show && (
+          <motion.div
+            variants={menuVars}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            className="lg:hidden w-full p-2 h-[180px] bg-black rounded-sm"
+          >
+            <motion.div className="flex justify-center items-center bg-black mt-5">
+              <motion.button
+                className="px-4 py-1 gap-1 font-bold text-white border border-white-500 rounded-lg flex justify-center items-center"
+                
+              >
+                <BsTable className="mr-1" />
+                <p>Course Menu</p>
+              </motion.button>
+            </motion.div>
+            <motion.div className="flex justify-center items-center mt-4">
+              <input
+                type="text"
+                placeholder="Search your course here !"
+                className="p-1 rounded-sm min-w-[300px] outline-none"
+              />
+              <CiSearch className="bg-orange-500 text-white py-2 px-2 justify-center min-w-8 min-h-8 lg:block rounded-r-md" />
+            </motion.div>
+            <motion.div className="All-course flex justify-center items-center gap-2 text-center text-white mt-4">
+              <span className="text-sm font-medium text-white lg:block">
+                All Courses
+              </span>
+              <span className="text-xl h-8">|</span>
+              <span className="text-sm font-medium text-white lg:block">
+                Corporate Training
+              </span>
+              <CgProfile className="text-3xl text-white lg:block ml-1" />
+            </motion.div>
           </motion.div>
-          <motion.div className="flex justify-center items-center mt-4">
-            <input
-              type="text"
-              placeholder="Search your course here !"
-              className="p-1 rounded-sm min-w-[300px] outline-none"
-            />
-            <CiSearch className="bg-orange-500 text-white py-2 px-2 justify-center min-w-8 min-h-8 lg:block rounded-r-md" />
-          </motion.div>
-          <motion.div className="All-course flex justify-center items-center gap-2 text-center text-white mt-4">
-            <span className="text-sm font-medium text-white lg:block">
-              All Courses
-            </span>
-            <span className="text-xl h-8">|</span>
-            <span className="text-sm font-medium text-white lg:block">
-              Corporate Training
-            </span>
-            <CgProfile className="text-3xl text-white lg:block ml-1" />
-          </motion.div>
-        </motion.div>
         )}
-        </AnimatePresence>
+      </AnimatePresence>
     </>
   );
 };
 
 export default Navbar;
+
 
     
   );
