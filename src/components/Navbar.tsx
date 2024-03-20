@@ -1,18 +1,42 @@
-"use client"
-import React, { useState } from 'react'
+"use client";
+import React, { useState } from "react";
 import Image from "next/image";
 import Logo from "../../public/logo.png";
-import { BiSolidPhoneCall } from 'react-icons/bi';
-import { BiMenu } from 'react-icons/bi';
-import { CgProfile } from 'react-icons/cg';
-import { BsTable } from 'react-icons/bs';
+import { BiSolidPhoneCall } from "react-icons/bi";
+import { BiMenu } from "react-icons/bi";
+import { CgProfile } from "react-icons/cg";
+import { BsTable } from "react-icons/bs";
 import { CiSearch } from "react-icons/ci";
-import { BsWhatsapp } from 'react-icons/bs';
-
+import { BsWhatsapp } from "react-icons/bs";
+import { motion, AnimatePresence } from "framer-motion";
 
 const Navbar = () => {
-  const [show, setShow] = useState(false)
-  const [slide, setSlide] = useState(false)
+  const [show, setShow] = useState(false);
+  const menuVars = {
+    initial: {
+      opacity: 0,
+      y: -10,
+    },
+    animate: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.5,
+        ease: [0.12, 0, 0.39, 0],
+        delayChildren: 0.3,
+        staggerChildren: 0.1,
+      },
+    },
+    exit: {
+      opacity: 0,
+      y: -10,
+      transition: {
+        duration: 0.5,
+        ease: [0.22, 1, 0.36, 1],
+      },
+    },
+  };
+  
   return (
     <>
       <section className="md:hidden lg:hidden">
@@ -39,10 +63,7 @@ const Navbar = () => {
               className="hidden lg:block"
             />
             <div className="hidden border-r-2 border-white h-10 lg:block"></div>
-            <button
-              className="items-center justify-center border-opacity-10 text-white rounded-md hidden py-2 px-5 lg:block border lg:flex"
-              onClick={() => setSlide(!slide)}
-            >
+            <button className="items-center justify-center border-opacity-10 text-white rounded-md hidden py-2 px-5 lg:block border lg:flex">
               <BsTable className="mr-1" />
               Course Menu
             </button>
@@ -51,7 +72,6 @@ const Navbar = () => {
                 type="text"
                 className="text-sm rounded-l-md p-1 min-w-[350px] border-none hidden lg:block"
                 placeholder="Search your course here !"
-                onClick={() => setSlide(!slide)}
               />
               <CiSearch className="bg-orange-500 text-white py-2 px-2 justify-center min-w-10 min-h-11 hidden lg:block rounded-r-md" />
             </div>
@@ -83,24 +103,34 @@ const Navbar = () => {
           </div>
         </div>
       </section>
-
+      
+      <AnimatePresence>
       {show && (
-        <div className="lg:hidden w-full p-2 h-[180px] bg-black rounded-sm">
-          <div className="flex justify-center items-center bg-black mt-5">
-            <button className="px-4 py-1 gap-1 font-bold text-white border border-white-500 rounded-lg flex justify-center items-center">
+        <motion.div
+          variants={menuVars}
+          initial="initial"
+          animate="animate"
+          exit="exit"
+          className="lg:hidden w-full p-2 h-[180px] bg-black rounded-sm origin-top"
+        >
+          <motion.div className="flex justify-center items-center bg-black mt-5">
+            <motion.button
+              className="px-4 py-1 gap-1 font-bold text-white border border-white-500 rounded-lg flex justify-center items-center"
+              whileHover={{ scale: 1.05 }}
+            >
               <BsTable className="mr-1" />
               <p>Course Menu</p>
-            </button>
-          </div>
-          <div className="flex justify-center items-center mt-4">
+            </motion.button>
+          </motion.div>
+          <motion.div className="flex justify-center items-center mt-4">
             <input
               type="text"
               placeholder="Search your course here !"
               className="p-1 rounded-sm min-w-[300px] outline-none"
             />
             <CiSearch className="bg-orange-500 text-white py-2 px-2 justify-center min-w-8 min-h-8 lg:block rounded-r-md" />
-          </div>
-          <div className="All-course flex justify-center items-center gap-2 text-center text-white mt-4">
+          </motion.div>
+          <motion.div className="All-course flex justify-center items-center gap-2 text-center text-white mt-4">
             <span className="text-sm font-medium text-white lg:block">
               All Courses
             </span>
@@ -109,19 +139,16 @@ const Navbar = () => {
               Corporate Training
             </span>
             <CgProfile className="text-3xl text-white lg:block ml-1" />
-          </div>
-        </div>
-      )}
-      {slide && (
-        <div>
-          
-        </div>
-      )}
+          </motion.div>
+        </motion.div>
+        )}
+        </AnimatePresence>
     </>
   );
-}
+};
 
 export default Navbar;
+
     
   );
 }
